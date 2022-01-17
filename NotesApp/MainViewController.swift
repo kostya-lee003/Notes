@@ -9,6 +9,7 @@ import UIKit
 
 class MainViewController: UIViewController {
     
+    let searchController = UISearchController(searchResultsController: ResultsViewController())
     let label = UILabel()
     let button = AddButton()
     var tableView: UITableView?
@@ -17,6 +18,8 @@ class MainViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .systemBackground
+        searchController.searchResultsUpdater = self
+        searchController.obscuresBackgroundDuringPresentation = true
         setupNavigationController()
         setupTableView()
         setupButton()
@@ -90,7 +93,7 @@ class MainViewController: UIViewController {
         navigationController?.navigationBar.prefersLargeTitles = true
         navigationController?.hidesBarsOnSwipe = true
         navigationItem.hidesSearchBarWhenScrolling = false
-        navigationItem.searchController = UISearchController()
+        navigationItem.searchController = searchController
     }
     
     private func removeCell(row: Int, tableView: UITableView) {
@@ -111,9 +114,7 @@ extension MainViewController: UITableViewDelegate, UITableViewDataSource {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: NoteCell.id, for: indexPath) as? NoteCell else {
             return UITableViewCell()
         }
-//        guard let cell = UITableViewCell(style: .subtitle, reuseIdentifier: NoteCell.id) as? NoteCell else {
-//            return UITableViewCell()
-//        }
+        
         cell.selectionStyle = .none
         return cell
     }
@@ -138,4 +139,14 @@ extension MainViewController: UITableViewDelegate, UITableViewDataSource {
         tableView.cellForRow(at: indexPath) ?? NoteCell()
     }
 
+}
+
+extension MainViewController: UISearchResultsUpdating {
+    func updateSearchResults(for searchController: UISearchController) {
+        guard let text = searchController.searchBar.text else {
+            return
+        }
+        let vc = searchController.searchResultsController as! ResultsViewController
+        vc.search(text: text)
+    }
 }

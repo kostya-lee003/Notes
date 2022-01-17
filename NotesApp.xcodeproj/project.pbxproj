@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		C865FA582795AD4D00F0270E /* ResultsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C865FA572795AD4D00F0270E /* ResultsViewController.swift */; };
 		C8DC76BA278E0E5200E77A52 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8DC76B9278E0E5200E77A52 /* AppDelegate.swift */; };
 		C8DC76BC278E0E5200E77A52 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8DC76BB278E0E5200E77A52 /* SceneDelegate.swift */; };
 		C8DC76BE278E0E5200E77A52 /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8DC76BD278E0E5200E77A52 /* MainViewController.swift */; };
@@ -21,6 +22,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		C865FA572795AD4D00F0270E /* ResultsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResultsViewController.swift; sourceTree = "<group>"; };
 		C8DC76B6278E0E5200E77A52 /* NotesApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = NotesApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		C8DC76B9278E0E5200E77A52 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		C8DC76BB278E0E5200E77A52 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -69,6 +71,7 @@
 				C8DC76B9278E0E5200E77A52 /* AppDelegate.swift */,
 				C8DC76BB278E0E5200E77A52 /* SceneDelegate.swift */,
 				C8DC76BD278E0E5200E77A52 /* MainViewController.swift */,
+				C865FA572795AD4D00F0270E /* ResultsViewController.swift */,
 				C8F5D2FE278F18EA006580EB /* Extensions.swift */,
 				C8DC76D3278E14EA00E77A52 /* AddButton.swift */,
 				C8DC76D1278E0F3200E77A52 /* NoteViewController.swift */,
@@ -158,6 +161,7 @@
 				C8DC76BA278E0E5200E77A52 /* AppDelegate.swift in Sources */,
 				C8F5D2FF278F18EA006580EB /* Extensions.swift in Sources */,
 				C8DC76D0278E0E9200E77A52 /* NoteCell.swift in Sources */,
+				C865FA582795AD4D00F0270E /* ResultsViewController.swift in Sources */,
 				C8DC76BC278E0E5200E77A52 /* SceneDelegate.swift in Sources */,
 				C8DC76D2278E0F3200E77A52 /* NoteViewController.swift in Sources */,
 				C8DC76CE278E0E7E00E77A52 /* Note.swift in Sources */,

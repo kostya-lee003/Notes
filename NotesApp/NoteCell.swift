@@ -40,17 +40,7 @@ class NoteCell: UITableViewCell {
     override func prepareForReuse() {
         super.prepareForReuse()
     }
-    
-//    private func createView() {
-//        titleLabel = UILabel(frame: CGRect(x: 30, y: 15, width: 80, height: 40))
-//        self.addSubview(titleLabel)
-//        titleLabel.font = .systemFont(ofSize: 20, weight: .semibold)
-//
-//        customTextLabel = UILabel(frame: CGRect(x: 30, y: 34, width: 60, height: 30))
-//        self.addSubview(customTextLabel)
-//        customTextLabel.font = .systemFont(ofSize: 18, weight: .regular)
-//    }
-    
+        
     func configureLabels() {
         self.textLabel?.text = note?.title ?? ""
         self.detailTextLabel?.text = note?.text ?? ""

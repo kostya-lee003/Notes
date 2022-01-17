@@ -49,6 +49,7 @@ class NoteViewController: UIViewController {
         textView.translatesAutoresizingMaskIntoConstraints = false
         let font = UIFont.systemFont(ofSize: 20)
         textView.font = font
+        textView.autocorrectionType = .no
         NSLayoutConstraint.activate([
             textView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             textView.centerYAnchor.constraint(equalTo: view.centerYAnchor, constant: view.frame.size.height * 0.09),
@@ -64,6 +65,7 @@ class NoteViewController: UIViewController {
         textField.translatesAutoresizingMaskIntoConstraints = false
         let font = UIFont.boldSystemFont(ofSize: 28)
         textField.font = font
+        textField.autocorrectionType = .no
         let attributes: [NSAttributedString.Key: Any] = [
             .font: font,
             .foregroundColor: UIColor.gray
