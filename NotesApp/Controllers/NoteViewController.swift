@@ -43,13 +43,9 @@ class NoteViewController: UIViewController {
     }
 
     private func setupTextView() {
-        textView = UITextView(frame: .zero)
+        textView = CustomtextView(frame: .zero)
         view.addSubview(textView)
         textView.delegate = self
-        textView.translatesAutoresizingMaskIntoConstraints = false
-        let font = UIFont.systemFont(ofSize: 20)
-        textView.font = font
-        textView.autocorrectionType = .no
         NSLayoutConstraint.activate([
             textView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             textView.centerYAnchor.constraint(equalTo: view.centerYAnchor, constant: view.frame.size.height * 0.09),
@@ -59,24 +55,17 @@ class NoteViewController: UIViewController {
     }
     
     private func setupTextField() {
-        textField = UITextField(frame: .zero)
+        textField = CustomTextField(frame: .zero)
         view.addSubview(textField)
         textField.delegate = self
-        textField.translatesAutoresizingMaskIntoConstraints = false
-        let font = UIFont.boldSystemFont(ofSize: 28)
-        textField.font = font
-        textField.autocorrectionType = .no
-        let attributes: [NSAttributedString.Key: Any] = [
-            .font: font,
-            .foregroundColor: UIColor.gray
-        ]
-        textField.attributedPlaceholder = NSAttributedString(string: "Title", attributes: attributes)
+        
         NSLayoutConstraint.activate([
             textField.bottomAnchor.constraint(equalTo: textView.topAnchor, constant: -10),
             textField.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             textField.heightAnchor.constraint(equalToConstant: 25),
             textField.widthAnchor.constraint(equalTo: view.widthAnchor, constant: -70)
         ])
+
     }
     
     func set(noteId: String) {
@@ -95,11 +84,7 @@ extension NoteViewController: UITextViewDelegate, UITextFieldDelegate {
     }
     
     func textFieldDidChangeSelection(_ textField: UITextField) {
-        MainViewController.notes[index].title = textField.text
+        MainViewController.notes[index].title = textField.text!
     }
     
-//    func textFieldDidEndEditing(_ textField: UITextField) {
-//        MainViewController.notes[index].title = textField.text
-//    }
-
 }
