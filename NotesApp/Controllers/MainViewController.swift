@@ -15,13 +15,14 @@ class MainViewController: UIViewController {
     var searchController = UISearchController(searchResultsController: nil)
         
     var tableView: UITableView?
-    let label = UILabel()
-    let button = AddButton()
+    let label = UILabel()            // Appears if there's no notes yet
+    let button = AddButton()         // Button at the botttom right corner
 
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .systemBackground
 
+        // setting up search controller
         searchController.searchResultsUpdater = self
         searchController.obscuresBackgroundDuringPresentation = false
         searchController.searchBar.placeholder = "Search"
@@ -31,6 +32,7 @@ class MainViewController: UIViewController {
         setupTableView()
         setupButton()
         setupLabel()
+        fetchNotesFromStorage()
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -38,15 +40,9 @@ class MainViewController: UIViewController {
         removeCellIfEmpty()
     }
     
-    private func setupButton() {
-        view.addSubview(button)
-        button.setButtonConstraints(view: view)
-        button.addTarget(self, action: #selector(didTapButton), for: .touchUpInside)
-    }
-    
     @objc private func didTapButton() {
-        let dateComponentsNow = Calendar.current.dateComponents([.second, .minute, .hour, .day, .month, .year], from: .now)
-        let newNote = Note(title: "", text: "", id: UUID().uuidString, dateComponents: dateComponentsNow)
+        
+        let newNote = CoreDataManager.shared.createNote()
         MainViewController.notes.insert(newNote, at: 0)
         
         tableView!.beginUpdates()
@@ -59,6 +55,12 @@ class MainViewController: UIViewController {
         noteVC.set(noteCell: (tableView?.cellForRow(at: IndexPath(row: 0, section: 0) ) as! NoteCell))
         
         navigationController?.pushViewController(noteVC, animated: true)
+    }
+    
+    private func setupButton() {
+        view.addSubview(button)
+        button.setButtonConstraints(view: view)
+        button.addTarget(self, action: #selector(didTapButton), for: .touchUpInside)
     }
     
     private func setupLabel() {
@@ -95,9 +97,7 @@ extension MainViewController: UISearchResultsUpdating {
     }
     
     func search(text: String) {
-        searchedNotes = MainViewController.notes.filter {
-            $0.text.lowercased().contains(text.lowercased()) || $0.title.lowercased().contains(text.lowercased())
-        }
-        tableView?.reloadData()
+        searchNotesFromStorage(text)
     }
+    
 }

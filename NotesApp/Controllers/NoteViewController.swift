@@ -19,7 +19,7 @@ class NoteViewController: UIViewController {
         index = MainViewController.notes.firstIndex(where: {$0.id == noteId})!
         view.backgroundColor = .systemBackground
         self.navigationItem.largeTitleDisplayMode = .never
-        
+        setupNavigationBarItem()
         setupTextView()
         setupTextField()
     }
@@ -40,6 +40,10 @@ class NoteViewController: UIViewController {
         noteCell.prepareNote()
         noteCell.configure(note: MainViewController.notes[index])
         noteCell.configureLabels()
+    }
+    
+    private func setupNavigationBarItem() {
+        navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .done, target: self, action: #selector(dismissKeyboard))
     }
 
     private func setupTextView() {
@@ -62,7 +66,7 @@ class NoteViewController: UIViewController {
         NSLayoutConstraint.activate([
             textField.bottomAnchor.constraint(equalTo: textView.topAnchor, constant: -10),
             textField.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            textField.heightAnchor.constraint(equalToConstant: 25),
+            textField.heightAnchor.constraint(equalToConstant: 30),
             textField.widthAnchor.constraint(equalTo: view.widthAnchor, constant: -70)
         ])
 
@@ -81,10 +85,20 @@ extension NoteViewController: UITextViewDelegate, UITextFieldDelegate {
     
     func textViewDidChange(_ textView: UITextView) {
         MainViewController.notes[index].text = textView.text
+        CoreDataManager.shared.save()
     }
     
     func textFieldDidChangeSelection(_ textField: UITextField) {
         MainViewController.notes[index].title = textField.text!
+        CoreDataManager.shared.save()
+    }
+    
+}
+
+extension NoteViewController {
+    
+    @objc func dismissKeyboard() {
+        view.endEditing(true)
     }
     
 }

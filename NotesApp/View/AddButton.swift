@@ -22,8 +22,8 @@ class AddButton: UIButton {
     
     func setButtonConstraints(view: UIView) {
         self.translatesAutoresizingMaskIntoConstraints = false
-        self.widthAnchor.constraint(equalToConstant: 45).isActive = true
-        self.heightAnchor.constraint(equalToConstant: 45).isActive = true
+        self.widthAnchor.constraint(equalToConstant: 40).isActive = true
+        self.heightAnchor.constraint(equalToConstant: 40).isActive = true
         self.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -45).isActive = true
         self.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -45).isActive = true
     }

@@ -12,7 +12,6 @@ class NoteCell: UITableViewCell {
     static let id = "NoteCell"
     private var note: Note?
     var dateLabel: UILabel!
-    var dateComponentsNow : DateComponents!
 
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: .subtitle, reuseIdentifier: reuseIdentifier)
@@ -48,13 +47,31 @@ class NoteCell: UITableViewCell {
         self.textLabel?.text = note?.title ?? ""
         self.detailTextLabel?.text = note?.text ?? ""
         
-        if Date.isToday(day: self.dateComponentsNow.day!) {
-            dateLabel.text = "\(dateComponentsNow.hour!):\(dateComponentsNow.minute!)"
-        } else if Date.isThisYear(year: self.dateComponentsNow.year!) {
-            dateLabel.text = "\(dateComponentsNow.day!).\(dateComponentsNow.month!)"
-        } else {
-            dateLabel.text = "\(dateComponentsNow.day!).\(dateComponentsNow.month!).\(dateComponentsNow.year!)"
+//        let components = Calendar.current.dateComponents([.second, .minute, .hour, .day, .month, .year], from: .now)
+//        let dateNow = Calendar.current.date(from: components)
+        
+        
+//        if Date.isToday(day: self.dateComponentsNow.day!) {
+//            dateLabel.text = "\(dateComponentsNow.hour!):\(dateComponentsNow.minute!)"
+//        } else if Date.isThisYear(year: self.dateComponentsNow.year!) {
+//            dateLabel.text = "\(dateComponentsNow.day!).\(dateComponentsNow.month!)"
+//        } else {
+//            dateLabel.text = "\(dateComponentsNow.day!).\(dateComponentsNow.month!).\(dateComponentsNow.year!)"
+//        }
+        
+        guard let note = note else {
+            print("Found nil value in variable note")
+            return
         }
+        let formatter = DateFormatter()
+        if Date.isToday(day: note.date.get(.day)) {
+            formatter.dateFormat = "HH:mm"
+        } else if Date.isThisYear(year: note.date.get(.year)) {
+            formatter.dateFormat = "MMM d"
+        } else {
+            formatter.dateFormat = "MM/dd/yyyy"
+        }
+        dateLabel.text = formatter.string(from: note.date)
     }
     
     func configure(note: Note) {

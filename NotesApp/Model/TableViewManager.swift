@@ -36,12 +36,16 @@ extension MainViewController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if isSearching {
+            label.isHidden = true
             return searchedNotes.count
         } else {
+            label.isHidden = false
             MainViewController.notes.count == 0 ? label.animateIn() : label.animateOut()
             return MainViewController.notes.count
         }
     }
+    
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat { 85 }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: NoteCell.id, for: indexPath) as? NoteCell else {
@@ -52,7 +56,7 @@ extension MainViewController: UITableViewDelegate, UITableViewDataSource {
         } else {
             cell.configure(note: MainViewController.notes[indexPath.row])
         }
-        cell.dateComponentsNow = MainViewController.notes[indexPath.row].dateComponents
+        
         cell.configureLabels()
         cell.selectionStyle = .none
         return cell
@@ -72,13 +76,19 @@ extension MainViewController: UITableViewDelegate, UITableViewDataSource {
         navigationController?.pushViewController(noteVC, animated: true)
     }
     
-    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat { 85 }
-    
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
-        removeCell(row: indexPath.row, tableView: tableView)
+        removeNote(row: indexPath.row, tableView: tableView)
     }
     
-    internal func removeCell(row: Int, tableView: UITableView) {
+    func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
+        if isSearching {
+            return false
+        }
+        return true
+    }
+    
+    internal func removeNote(row: Int, tableView: UITableView) {
+        deleteNoteFromStorage(at: row)
         MainViewController.notes.remove(at: row)
         let path = IndexPath(row: row, section: 0)
         tableView.deleteRows(at: [path], with: .top)
@@ -90,8 +100,26 @@ extension MainViewController: UITableViewDelegate, UITableViewDataSource {
         }
         if firstNoteCell.title.trimmingCharacters(in: .whitespaces).isEmpty &&
             firstNoteCell.text.trimmingCharacters(in: .whitespaces).isEmpty {
-            removeCell(row: 0, tableView: tableView!)
+            removeNote(row: 0, tableView: tableView!)
         }
+    }
+    
+}
+
+// MARK:- Helper to handle data (Note) manipulation
+extension MainViewController {
+    
+    func fetchNotesFromStorage() {
+        MainViewController.notes = CoreDataManager.shared.fetchNotes()
+    }
+    
+    private func deleteNoteFromStorage(at index: Int) {
+        CoreDataManager.shared.deleteNote(MainViewController.notes[index])
+    }
+    
+    func searchNotesFromStorage(_ text: String) {
+        searchedNotes = CoreDataManager.shared.fetchNotes(filter: text)
+        tableView?.reloadData()
     }
     
 }
