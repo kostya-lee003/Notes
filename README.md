@@ -8,6 +8,6 @@ Simple IOS notes app written programmatically without storyboard using UIKit and
 
 ## Usage
 Everyone is free to use, copy and distribute this software.
-Clone the project and start!
+Clone the  project and start!
 
 https://github.com/kostya-lee003/Notes
